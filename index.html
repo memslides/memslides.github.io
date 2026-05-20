@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MemSlides | Hierarchical Memory for Personalized Slide Agents</title>
+  <meta name="description" content="MemSlides is a hierarchical-memory framework for personalized presentation generation and multi-turn localized revision.">
+  <style>
+    :root {
+      --bg: #f7faf8;
+      --paper: #ffffff;
+      --ink: #10201a;
+      --muted: #5d6f67;
+      --line: #d7e1da;
+      --green: #047857;
+      --green-deep: #064e3b;
+      --mint: #dff5ea;
+      --amber: #b45309;
+      --amber-soft: #fff3d6;
+      --blue: #2563eb;
+      --cyan: #0e7490;
+      --red: #b91c1c;
+      --shadow: 0 18px 48px rgba(16, 32, 26, 0.12);
+      --radius: 8px;
+      --max: 1180px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgba(215, 225, 218, 0.88);
+      background: rgba(247, 250, 248, 0.94);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.02rem;
+      color: var(--green-deep);
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--green-deep);
+      position: relative;
+      flex: 0 0 auto;
+      box-shadow: inset 0 -9px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      right: 7px;
+      top: 8px;
+      height: 3px;
+      background: #f59e0b;
+      box-shadow: 0 6px 0 #dff5ea;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.92rem;
+      color: #31463d;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 7px;
+    }
+
+    .nav-links a:hover {
+      background: #eaf4ee;
+      color: var(--green-deep);
+    }
+
+    .hero {
+      min-height: 86vh;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      background: #10201a;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: 0.64;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      background: #10201a;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: rgba(9, 22, 18, 0.72);
+    }
+
+    .hero-inner {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      padding: 86px 0 74px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #dff5ea;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: #f59e0b;
+    }
+
+    .hero h1 {
+      margin: 18px 0 18px;
+      max-width: 920px;
+      color: #ffffff;
+      font-size: 4.4rem;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .hero .lead {
+      max-width: 790px;
+      margin: 0;
+      color: #e8f3ed;
+      font-size: 1.24rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 7px;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      color: #ffffff;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .button.primary {
+      background: #f59e0b;
+      border-color: #f59e0b;
+      color: #241404;
+    }
+
+    .button.is-disabled {
+      cursor: default;
+    }
+
+    .button.is-disabled:hover {
+      transform: none;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      max-width: 820px;
+      gap: 1px;
+      margin-top: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .hero-stat {
+      padding: 16px;
+      background: rgba(7, 25, 19, 0.62);
+      min-height: 112px;
+    }
+
+    .hero-stat strong {
+      display: block;
+      color: #ffffff;
+      font-size: 1.45rem;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .hero-stat span {
+      color: #d4e4dc;
+      font-size: 0.9rem;
+    }
+
+    section {
+      padding: 82px 0;
+      scroll-margin-top: 76px;
+    }
+
+    .band-white {
+      background: var(--paper);
+    }
+
+    .band-muted {
+      background: #eef6f1;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.76fr) minmax(280px, 0.44fr);
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--green);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 2.35rem;
+      line-height: 1.12;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 1.14rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .section-head p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      padding: 22px;
+      box-shadow: 0 8px 22px rgba(16, 32, 26, 0.05);
+    }
+
+    .card .tag {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--green-deep);
+      background: var(--mint);
+      border: 1px solid #bdddcf;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .figure-panel {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .figure-panel img {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      object-fit: contain;
+      background: #ffffff;
+    }
+
+    .figure-caption {
+      padding: 15px 18px 17px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .system-map {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.42fr) minmax(0, 0.58fr);
+      grid-template-areas:
+        "scale-top figure"
+        "arrow figure"
+        "scale-bottom detail";
+      column-gap: 24px;
+      row-gap: 14px;
+      align-items: stretch;
+    }
+
+    .scale-card {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 8px 22px rgba(16, 32, 26, 0.04);
+    }
+
+    .scale-card.active {
+      border-color: #add4c4;
+      background: #fbfffd;
+    }
+
+    .scale-card-top {
+      grid-area: scale-top;
+    }
+
+    .scale-card-bottom {
+      grid-area: scale-bottom;
+      height: 100%;
+    }
+
+    .scale-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .scale-index {
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .scale-lifetime {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .scale-card h3 {
+      font-size: 1.28rem;
+      margin-bottom: 8px;
+    }
+
+    .scale-card p {
+      margin: 0;
+      font-size: 0.94rem;
+    }
+
+    .scale-modules {
+      display: grid;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .scale-module {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 12px;
+      background: #f7fbf8;
+    }
+
+    .scale-module strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .scale-module span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .scale-arrow {
+      grid-area: arrow;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+      color: var(--amber);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .scale-arrow::before,
+    .scale-arrow::after {
+      content: "";
+      height: 1px;
+      background: #d8e4dd;
+    }
+
+    .memory-detail-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      padding: 15px;
+      box-shadow: 0 12px 30px rgba(16, 32, 26, 0.07);
+    }
+
+    .framework-figure {
+      grid-area: figure;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      min-height: 100%;
+      align-self: stretch;
+    }
+
+    .framework-figure img {
+      height: 100%;
+      aspect-ratio: auto;
+      object-fit: contain;
+      padding: 18px 18px 12px;
+    }
+
+    .framework-detail-card {
+      grid-area: detail;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      align-self: stretch;
+    }
+
+    .detail-kicker {
+      color: var(--amber);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .memory-detail-card h3 {
+      margin-bottom: 0;
+    }
+
+    .granularity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .granularity-item {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--amber);
+      border-radius: 7px;
+      background: #f7fbf8;
+      padding: 10px 11px;
+    }
+
+    .granularity-item.operation {
+      border-left-color: var(--cyan);
+    }
+
+    .granularity-item strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .granularity-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.42;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .flow-step {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 18px;
+      min-height: 170px;
+    }
+
+    .flow-step .num {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 0.86rem;
+      margin-bottom: 8px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .metric-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--paper);
+      border: 1px solid var(--line);
+    }
+
+    .metric-table th,
+    .metric-table td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .metric-table th {
+      background: #e6f2eb;
+      color: var(--green-deep);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .metric-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .metric-good {
+      font-weight: 900;
+      color: var(--green-deep);
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .quote-panel {
+      background: #13231d;
+      color: #ffffff;
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .quote-panel p {
+      color: #dbe9e1;
+      margin: 0;
+      font-size: 1.04rem;
+    }
+
+    .quote-panel strong {
+      color: #ffffff;
+      font-size: 1.54rem;
+      line-height: 1.18;
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .gallery-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 10px 28px rgba(16, 32, 26, 0.06);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      aspect-ratio: 16 / 8.8;
+      object-fit: contain;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .gallery-item div {
+      padding: 16px;
+    }
+
+    .gallery-item p {
+      margin: 0;
+      font-size: 0.92rem;
+    }
+
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .repo-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      padding: 18px;
+      min-height: 180px;
+    }
+
+    .repo-card code {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--green-deep);
+      background: var(--mint);
+      border-radius: 6px;
+      padding: 4px 7px;
+      font-size: 0.82rem;
+    }
+
+    .repo-card p {
+      margin: 0;
+      font-size: 0.92rem;
+    }
+
+    .footer {
+      padding: 38px 0;
+      background: #10201a;
+      color: #ffffff;
+    }
+
+    .footer-inner {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer a {
+      color: #fcd38a;
+      font-weight: 700;
+    }
+
+    .footer-signals {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid rgba(223, 245, 234, 0.22);
+      border-radius: 999px;
+      background: rgba(223, 245, 234, 0.06);
+      color: #dff5ea;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 980px) {
+      .hero h1 {
+        font-size: 3.2rem;
+      }
+
+      .hero-stats,
+      .problem-grid,
+      .flow,
+      .repo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section-head,
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .system-map {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "scale-top"
+          "arrow"
+          "scale-bottom"
+          "figure"
+          "detail";
+      }
+
+      .framework-figure {
+        display: block;
+        min-height: 0;
+      }
+
+      .framework-figure img {
+        height: auto;
+        aspect-ratio: 16 / 7;
+        padding: 0;
+      }
+
+      .framework-detail-card,
+      .scale-card-bottom {
+        height: auto;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-inner {
+        width: min(100% - 28px, var(--max));
+        min-height: 58px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: 82vh;
+      }
+
+      .hero-inner,
+      .wrap,
+      .footer-inner {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .hero h1 {
+        font-size: 2.35rem;
+      }
+
+      .hero .lead {
+        font-size: 1.05rem;
+      }
+
+      section {
+        padding: 56px 0;
+      }
+
+      h2 {
+        font-size: 1.82rem;
+      }
+
+      .hero-stats,
+      .problem-grid,
+      .flow,
+      .granularity-grid,
+      .gallery,
+      .repo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        display: none;
+      }
+
+      .scale-topline {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .scale-card {
+        padding: 16px;
+      }
+
+      .framework-figure img {
+        aspect-ratio: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="MemSlides home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>MemSlides</span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#framework">Framework</a>
+        <a href="#revision">Revision</a>
+        <a href="#results">Results</a>
+        <a href="#gallery">Cases</a>
+        <a href="#code">Code Map</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <img class="hero-media" src="figures/pptagent_memory_workflow.png" alt="MemSlides workflow overview diagram">
+      <div class="hero-inner">
+        <div class="eyebrow">Research project page</div>
+        <h1>MemSlides: A Hierarchical Memory Framework for Personalized Presentation Agents</h1>
+        <p class="lead">
+          A two-scale hierarchical memory framework for personalized presentation agents: long-term memory persists user profiles and tool experience across jobs, while working memory carries the active state of the current deck.
+        </p>
+        <div class="hero-actions">
+          <span class="button primary is-disabled" aria-disabled="true">Paper</span>
+          <span class="button is-disabled" aria-disabled="true">Code</span>
+          <a class="button" href="#framework">View Framework</a>
+          <a class="button" href="#results">See Results</a>
+        </div>
+        <div class="hero-stats" aria-label="Key paper results">
+          <div class="hero-stat">
+            <strong>+2.73</strong>
+            <span>Content gain over SlideTailor averaged across model families</span>
+          </div>
+          <div class="hero-stat">
+            <strong>0.963</strong>
+            <span>Closed-loop completion with tool memory in modify pairs</span>
+          </div>
+          <div class="hero-stat">
+            <strong>2 scales</strong>
+            <span>Long-term memory for cross-job reuse and working memory for the active session</span>
+          </div>
+          <div class="hero-stat">
+            <strong>local</strong>
+            <span>Revision operates on the smallest effective slide region</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="problem" class="band-white">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Why MemSlides</div>
+            <h2>Presentation agents need memory, not just better prompts.</h2>
+          </div>
+          <p>
+            Slides are personal artifacts. A user may want concise PI-style evidence, teaching walkthroughs, template faithful layouts, or scoped edits that preserve the rest of the deck. These signals have different lifetimes and should not be collapsed into a single context buffer.
+          </p>
+        </div>
+        <div class="problem-grid">
+          <article class="card">
+            <span class="tag">Round-0 personalization</span>
+            <h3>Profiles should shape the first draft.</h3>
+            <p>User profile memory stores intent-conditioned preferences across theme, content, visual, layout, template, and general dimensions, then routes compatible items into the active job.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Multi-turn carryover</span>
+            <h3>Feedback often reveals preferences late.</h3>
+            <p>Working memory keeps temporary deck-local preferences alive across later rounds, so a style or constraint introduced once can guide subsequent edits and inserted slides.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Localized editing</span>
+            <h3>Small requests should not rewrite the deck.</h3>
+            <p>MemSlides resolves the target surface, applies scoped patches, and verifies coverage before finalize, reducing drift in content that was already aligned.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="framework" class="band-muted">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Framework</div>
+            <h2>Two memory scales connect persistent personalization with session-local revision.</h2>
+          </div>
+          <p>
+            The paper separates memory first by lifetime. Long-term memory persists across jobs and contains user profile memory plus tool memory; working memory is the current-job state that generation and revision actually read.
+          </p>
+        </div>
+        <div class="system-map" aria-label="Two memory scales in MemSlides">
+            <article class="scale-card scale-card-top">
+              <div class="scale-topline">
+                <span class="scale-index">Scale 1</span>
+                <span class="scale-lifetime">Persistent across jobs</span>
+              </div>
+              <h3>Long-term memory</h3>
+              <p>Stores reusable signals that should survive beyond one deck authoring session.</p>
+              <div class="scale-modules">
+                <div class="scale-module">
+                  <strong>User Profile Memory</strong>
+                  <span>Intent-aware presentation preferences: theme, content, visual, layout, template, and general habits.</span>
+                </div>
+                <div class="scale-module">
+                  <strong>Tool Memory</strong>
+                  <span>Reusable execution experience from tool calls, errors, successful local edits, and verification outcomes.</span>
+                </div>
+              </div>
+            </article>
+            <div class="scale-arrow">route / retrieve into</div>
+            <article class="scale-card scale-card-bottom active">
+              <div class="scale-topline">
+                <span class="scale-index">Scale 2</span>
+                <span class="scale-lifetime">Active within the current job</span>
+              </div>
+              <h3>Working memory</h3>
+              <p>Holds the active subset used by the agent now: routed profile items, temporary feedback preferences, edit state, carryover instructions, and repair focus for the current deck.</p>
+            </article>
+            <figure class="figure-panel framework-figure">
+              <img src="figures/pptagent_memory_workflow.png" alt="Overview of MemSlides hierarchical memory workflow">
+              <figcaption class="figure-caption">
+                The overview figure follows the same two-scale structure: long-term memory contains user profile and tool memory, while working memory carries the active state into generation and Modify Exec.
+              </figcaption>
+            </figure>
+            <article class="memory-detail-card framework-detail-card">
+              <div class="detail-kicker">Tool memory granularity</div>
+              <h3>Two reuse granularities for edit execution.</h3>
+              <div class="granularity-grid">
+                <div class="granularity-item round">
+                  <strong>Round-scope task experience</strong>
+                  <span>Job-level lessons buffered through working memory and updated after modify rounds.</span>
+                </div>
+                <div class="granularity-item operation">
+                  <strong>Operation-scope tool chain</strong>
+                  <span>Reasoning, tool-call, and observation fragments retrieved before similar operations.</span>
+                </div>
+              </div>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="revision" class="band-white">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Plan Act Guard</div>
+            <h2>Localized modify execution makes revision a checked state.</h2>
+          </div>
+          <p>
+            MemSlides converts feedback into an execution contract, chooses the smallest effective editing surface, and blocks premature completion when required coverage has not been verified.
+          </p>
+        </div>
+        <figure class="figure-panel">
+          <img src="figures/localized_tool_pipline.png" alt="Localized modify execution pipeline">
+          <figcaption class="figure-caption">
+            Working memory supplies active preferences and edit state to a Plan-Act-Guard loop that scopes, edits, and verifies localized changes.
+          </figcaption>
+        </figure>
+        <div class="flow">
+          <article class="flow-step">
+            <div class="num">01 Plan</div>
+            <h3>Build an execution contract.</h3>
+            <p>Infer scope, target slides, active rules, selector hints, and whether coverage is required before editing.</p>
+          </article>
+          <article class="flow-step">
+            <div class="num">02 Act</div>
+            <h3>Edit the bounded surface.</h3>
+            <p>Prefer batch CSS, semantic styling, or local patches over whole-deck regeneration; reserve full rewrite for new slides or controlled recovery.</p>
+          </article>
+          <article class="flow-step">
+            <div class="num">03 Guard</div>
+            <h3>Verify before finalize.</h3>
+            <p>Use inspection, coverage checks, snapshot hashes, and repair focus to stop the agent from declaring completion too early.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="band-muted">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Evidence</div>
+            <h2>Profile memory improves persona alignment while tool memory improves edit reliability.</h2>
+          </div>
+          <p>
+            The evaluation covers first-pass personalization, ordinary deck quality, and diagnostic matched-pair modify behavior.
+          </p>
+        </div>
+        <div class="results-grid">
+          <table class="metric-table" aria-label="Selected MemSlides results">
+            <thead>
+              <tr>
+                <th>Question</th>
+                <th>Signal</th>
+                <th>Selected result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Does profile memory help?</td>
+                <td>Persona-alignment judgments</td>
+                <td><span class="metric-good">All-column wins</span> over both baselines on GLM-5 and Gemini 3.1 Pro; strongest averaged gains over SlideTailor are Content +2.73, Structure +2.95, Visual +2.79, Specificity +3.08.</td>
+              </tr>
+              <tr>
+                <td>Does quality remain competitive?</td>
+                <td>DeepPresenter-style quality metrics</td>
+                <td><span class="metric-good">GPT-5 Avg. 4.17</span> for MemSlides, best among compared systems in the shared three-profile suite.</td>
+              </tr>
+              <tr>
+                <td>Does tool memory improve editing?</td>
+                <td>Diagnostic modify pairs</td>
+                <td><span class="metric-good">0.963</span> closed-loop completion and <span class="metric-good">0.534</span> strict verify with memory injection; first correct edit reduced from 609.5s to 242.5s overall.</td>
+              </tr>
+            </tbody>
+          </table>
+          <aside class="quote-panel">
+            <div>
+              <strong>Personalization is routed, reconciled, executed, and verified.</strong>
+              <p>MemSlides treats memory as an operating layer: profile memory decides default persona direction, working memory keeps the current deck coherent, and tool memory helps the agent execute edits with fewer repeated failures.</p>
+            </div>
+            <p class="metric-note">Metrics and wording are drawn from the local study tables and qualitative cases.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="band-white">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Qualitative Cases</div>
+            <h2>The homepage uses the paper's real visual evidence.</h2>
+          </div>
+          <p>
+            These figures show the concrete behaviors the system is built to support: profile consolidation, template-guided generation, working-memory carryover, and localized patching.
+          </p>
+        </div>
+        <div class="gallery">
+          <article class="gallery-item">
+            <img src="figures/user_profile_preference_memory_lifecycle.png" alt="User profile preference memory lifecycle">
+            <div>
+              <h3>Profile lifecycle</h3>
+              <p>Intent-conditioned profile memory is selected, reconciled with the current request, used as active memory, and consolidated after the job.</p>
+            </div>
+          </article>
+          <article class="gallery-item">
+            <img src="figures/localized_modify_example.png" alt="Localized modify comparison">
+            <div>
+              <h3>Localized modification</h3>
+              <p>Targeted patches preserve already aligned content while satisfying the requested local change.</p>
+            </div>
+          </article>
+          <article class="gallery-item">
+            <img src="figures/template_generation_showcase_v7_comic_font_template_vs_generated_6panel.png" alt="Template generation showcase">
+            <div>
+              <h3>Template-aware generation</h3>
+              <p>Task-time templates act as deck-local design constraints rather than generic profile preferences.</p>
+            </div>
+          </article>
+          <article class="gallery-item">
+            <img src="figures/six_round_profile_consolidation_cases.png" alt="Six-round profile consolidation cases">
+            <div>
+              <h3>Cross-job consolidation</h3>
+              <p>Repeated local feedback cues become reusable organization patterns for later jobs.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="code" class="band-muted">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Implementation Map</div>
+            <h2>The codebase mirrors the paper's memory and revision decomposition.</h2>
+          </div>
+          <p>
+            The MemSlides source tree separates generation, revision, runtime state, templates, tools, web sessions, and memory stores so the research concepts stay inspectable in engineering terms.
+          </p>
+        </div>
+        <div class="repo-grid">
+          <article class="repo-card">
+            <code>pipelines/</code>
+            <h3>Generation and revision</h3>
+            <p>Coordinates Researcher, DeckDesigner, export, profile execution plans, and localized revision loops.</p>
+          </article>
+          <article class="repo-card">
+            <code>memory/</code>
+            <h3>Profile and tool memory</h3>
+            <p>Stores user profiles, atomic preferences, episodes, tool chains, routing, extraction, and consolidation.</p>
+          </article>
+          <article class="repo-card">
+            <code>runtime/</code>
+            <h3>Session state</h3>
+            <p>Tracks deck execution state, page contracts, progress prompts, and local workflow context.</p>
+          </article>
+          <article class="repo-card">
+            <code>tools/</code>
+            <h3>Guarded slide operations</h3>
+            <p>Implements write, inspect, patch, template, document, asset, memory, and verifier tools.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>MemSlides</strong><br>
+        Hierarchical memory for personalized slide generation and local revision.
+      </div>
+      <div class="footer-signals" aria-label="Core research signals">
+        <span class="footer-pill">Profile memory</span>
+        <span class="footer-pill">Working memory</span>
+        <span class="footer-pill">Localized revision</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
