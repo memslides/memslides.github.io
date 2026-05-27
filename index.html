@@ -34,6 +34,7 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     body {
@@ -41,6 +42,7 @@
       background: var(--bg);
       color: var(--ink);
       line-height: 1.55;
+      overflow-x: hidden;
     }
 
     a {
@@ -128,7 +130,7 @@
     }
 
     .hero-inner {
-      width: min(var(--max), calc(100% - 40px));
+      width: min(1400px, calc(100% - 40px));
       margin: 0 auto;
       padding: 66px 0 58px;
     }
@@ -152,15 +154,19 @@
 
     .hero h1 {
       margin: 18px auto 18px;
-      max-width: 1060px;
+      width: 100%;
+      max-width: 1320px;
       color: var(--ink);
       font-size: 3.86rem;
       line-height: 1.04;
       letter-spacing: 0;
       text-align: center;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
     }
 
     .hero .lead {
+      width: 100%;
       max-width: 860px;
       margin: 0 auto;
       color: #476057;
@@ -209,14 +215,13 @@
       transform: translateY(-1px);
     }
 
-    .hero-teaser {
-      margin-top: 34px;
-    }
-
-    .hero-teaser img {
-      aspect-ratio: 16 / 8.2;
+    .hero-video video {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
       object-fit: contain;
-      background: #f7faf8;
+      background: #07110d;
     }
 
     section {
@@ -362,6 +367,12 @@
       overflow: hidden;
       background: var(--paper);
       box-shadow: var(--shadow);
+    }
+
+    .figure-panel.hero-video {
+      margin: 34px auto 0;
+      width: 100%;
+      max-width: var(--max);
     }
 
     .figure-panel img {
@@ -825,7 +836,7 @@
 
     @media (max-width: 680px) {
       .nav-inner {
-        width: min(100% - 28px, var(--max));
+        width: min(var(--max), calc(100% - 28px));
         min-height: 58px;
       }
 
@@ -840,11 +851,12 @@
       .hero-inner,
       .wrap,
       .footer-inner {
-        width: min(100% - 28px, var(--max));
+        width: min(var(--max), calc(100% - 28px));
       }
 
       .hero h1 {
-        font-size: 2.35rem;
+        font-size: 2.05rem;
+        line-height: 1.1;
       }
 
       .hero .lead {
@@ -882,12 +894,29 @@
         aspect-ratio: auto;
       }
 
+      .hero-video video {
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    @media (max-width: 430px) {
       .hero h1 {
-        font-size: 2.42rem;
+        font-size: 1.5rem;
+        line-height: 1.12;
       }
 
-      .hero-teaser img {
-        aspect-ratio: auto;
+      .hero .lead {
+        font-size: 0.98rem;
+      }
+
+      .button {
+        min-height: 42px;
+        padding: 0 14px;
+        font-size: 0.95rem;
+      }
+
+      .figure-caption {
+        padding: 13px 14px 15px;
       }
     }
   </style>
@@ -900,6 +929,7 @@
         <span>MemSlides</span>
       </a>
       <div class="nav-links">
+        <a href="#video">Video</a>
         <a href="#abstract">Abstract</a>
         <a href="#framework">Framework</a>
         <a href="#revision">Revision</a>
@@ -920,13 +950,17 @@
         <div class="hero-actions">
           <span class="button meta" aria-disabled="true">Paper</span>
           <span class="button meta" aria-disabled="true">Code</span>
+          <a class="button primary" href="#video">Watch Video</a>
           <a class="button" href="#framework">View Framework</a>
           <a class="button" href="#results">See Results</a>
         </div>
-        <figure class="figure-panel hero-teaser">
-          <img src="figures/pptagent_memory_workflow.png" alt="MemSlides workflow overview diagram">
+        <figure id="video" class="figure-panel hero-video">
+          <video controls playsinline preload="metadata" poster="video0525/video-cover.jpg" aria-label="MemSlides project video">
+            <source src="video0525/video-web.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
           <figcaption class="figure-caption">
-            A two-scale memory design routes persistent user preferences and reusable execution experience into the active deck session for controlled generation and local revision.
+            MemSlides demonstration video showing profile memory, working memory, and localized revision in the slide-generation workflow.
           </figcaption>
         </figure>
       </div>
@@ -1022,7 +1056,7 @@
               <p>Holds the active subset used by the agent now: routed profile items, temporary feedback preferences, edit state, carryover instructions, and repair focus for the current deck.</p>
             </article>
             <figure class="figure-panel framework-figure">
-              <img src="figures/pptagent_memory_workflow.png" alt="Overview of MemSlides hierarchical memory workflow">
+              <img src="figures/pptagent_memory_workflow.png" alt="Overview of MemSlides hierarchical memory workflow" loading="lazy">
               <figcaption class="figure-caption">
                 The overview figure follows the same two-scale structure: long-term memory contains user profile and tool memory, while working memory carries the active state into generation and Modify Exec.
               </figcaption>
@@ -1057,7 +1091,7 @@
           </p>
         </div>
         <figure class="figure-panel">
-          <img src="figures/localized_tool_pipline.png" alt="Localized modify execution pipeline">
+          <img src="figures/localized_tool_pipline.png" alt="Localized modify execution pipeline" loading="lazy">
           <figcaption class="figure-caption">
             Working memory supplies active preferences and edit state to a Plan-Act-Guard loop that scopes, edits, and verifies localized changes.
           </figcaption>
@@ -1164,14 +1198,14 @@
             </div>
             <div class="gallery">
               <article class="gallery-item">
-                <img src="figures/user_profile_preference_memory_lifecycle.png" alt="User profile preference memory lifecycle">
+                <img src="figures/user_profile_preference_memory_lifecycle.png" alt="User profile preference memory lifecycle" loading="lazy">
                 <div>
                   <h3>Profile lifecycle</h3>
                   <p>Intent-conditioned profile memory is selected, reconciled with the current request, used as active memory, and consolidated after the job.</p>
                 </div>
               </article>
               <article class="gallery-item">
-                <img src="figures/six_round_profile_consolidation_cases.png" alt="Six-round profile consolidation cases">
+                <img src="figures/six_round_profile_consolidation_cases.png" alt="Six-round profile consolidation cases" loading="lazy">
                 <div>
                   <h3>Cross-job consolidation</h3>
                   <p>Repeated local feedback cues become reusable organization patterns for later jobs.</p>
@@ -1186,14 +1220,14 @@
             </div>
             <div class="gallery">
               <article class="gallery-item">
-                <img src="figures/localized_modify_example.png" alt="Localized modify comparison">
+                <img src="figures/localized_modify_example.png" alt="Localized modify comparison" loading="lazy">
                 <div>
                   <h3>Localized modification</h3>
                   <p>Targeted patches preserve already aligned content while satisfying the requested local change.</p>
                 </div>
               </article>
               <article class="gallery-item">
-                <img src="figures/template_generation_showcase_v7_comic_font_template_vs_generated_6panel.png" alt="Template generation showcase">
+                <img src="figures/template_generation_showcase_v7_comic_font_template_vs_generated_6panel.png" alt="Template generation showcase" loading="lazy">
                 <div>
                   <h3>Template-aware generation</h3>
                   <p>Task-time templates act as deck-local design constraints rather than generic profile preferences.</p>
