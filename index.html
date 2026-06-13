@@ -129,20 +129,10 @@
     }
 
     .hero-inner {
-      width: min(1400px, calc(100% - 40px));
+      width: min(var(--max), calc(100% - 40px));
       margin: 0 auto;
-      padding: 58px min(4vw, 56px) 46px;
+      padding: 44px 0 30px;
       position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background:
-        linear-gradient(rgba(148, 163, 184, 0.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148, 163, 184, 0.10) 1px, transparent 1px),
-        rgba(255, 255, 255, 0.76);
-      background-size: 48px 48px, 48px 48px, auto;
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(18px);
     }
 
     .eyebrow {
@@ -163,11 +153,11 @@
     }
 
     .hero h1 {
-      margin: 18px auto 18px;
+      margin: 16px auto 16px;
       width: 100%;
       max-width: 1320px;
       color: var(--ink);
-      font-size: 3.86rem;
+      font-size: 3.48rem;
       line-height: 1.04;
       letter-spacing: 0;
       text-align: center;
@@ -180,7 +170,7 @@
       max-width: 860px;
       margin: 0 auto;
       color: #475569;
-      font-size: 1.16rem;
+      font-size: 1.1rem;
       text-align: center;
     }
 
@@ -189,48 +179,67 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 28px;
+      margin-top: 22px;
     }
 
     .button {
+      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 0 16px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--line);
+      min-height: 46px;
+      padding: 0 18px;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
       color: var(--ink);
-      font-weight: 700;
-      background: rgba(255, 255, 255, 0.86);
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+      font-weight: 800;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.86));
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.88) inset, 0 10px 24px rgba(15, 23, 42, 0.07);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
     }
 
     .button.primary {
-      background: linear-gradient(135deg, var(--green), var(--cyan));
-      border-color: rgba(6, 182, 212, 0.34);
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border-color: rgba(6, 182, 212, 0.42);
       color: #ffffff;
-      box-shadow: 0 12px 24px rgba(13, 148, 136, 0.26);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.24) inset, 0 16px 34px rgba(37, 99, 235, 0.24);
+    }
+
+    .button.ghost {
+      color: #334155;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .button.soft,
+    .button.meta {
+      min-height: 42px;
+      padding: 0 15px;
+      border-radius: 999px;
+      border-color: rgba(37, 99, 235, 0.16);
+      color: var(--blue);
+      background: rgba(219, 234, 254, 0.62);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.86) inset, 0 8px 18px rgba(37, 99, 235, 0.09);
     }
 
     .button.meta {
-      min-height: 40px;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.70);
-      border-color: var(--line);
-      color: #334155;
       font-size: 0.92rem;
     }
 
     .button:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 235, 0.28);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.88) inset, 0 16px 30px rgba(15, 23, 42, 0.10);
+    }
+
+    .button:active {
+      transform: translateY(0);
     }
 
     .button:focus-visible,
+    .profile-filter:focus-visible,
     .showcase-arrow:focus-visible,
-    .showcase-dot:focus-visible,
+    .progress-segment:focus-visible,
     .nav-links a:focus-visible {
       outline: 3px solid rgba(37, 99, 235, 0.18);
       outline-offset: 2px;
@@ -246,7 +255,7 @@
     }
 
     section {
-      padding: 82px 0;
+      padding: 50px 0;
       scroll-margin-top: 76px;
     }
 
@@ -268,9 +277,9 @@
     .section-head {
       display: grid;
       grid-template-columns: minmax(0, 0.76fr) minmax(280px, 0.44fr);
-      gap: 48px;
+      gap: 36px;
       align-items: end;
-      margin-bottom: 34px;
+      margin-bottom: 22px;
     }
 
     .section-kicker {
@@ -309,7 +318,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: rgba(255, 255, 255, 0.78);
-      padding: 28px 30px;
+      padding: 22px 24px;
       box-shadow: var(--shadow-sm);
       backdrop-filter: blur(14px);
     }
@@ -331,7 +340,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--paper);
-      padding: 22px;
+      padding: 18px;
       box-shadow: var(--shadow-sm);
       backdrop-filter: blur(14px);
     }
@@ -394,7 +403,7 @@
     }
 
     .figure-panel.hero-video {
-      margin: 34px auto 0;
+      margin: 26px auto 0;
       width: 100%;
       max-width: var(--max);
       border-radius: 22px;
@@ -402,13 +411,13 @@
 
     .figure-panel img {
       width: 100%;
-      aspect-ratio: 16 / 7.15;
+      height: auto;
       object-fit: contain;
       background: #ffffff;
     }
 
     .figure-caption {
-      padding: 15px 18px 17px;
+      padding: 12px 16px 14px;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 0.92rem;
@@ -422,259 +431,201 @@
       align-items: start;
     }
 
+    .showcase-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .profile-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .profile-filter {
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid rgba(148, 163, 184, 0.56);
+      border-radius: 999px;
+      color: #475569;
+      background: rgba(255, 255, 255, 0.72);
+      font-weight: 850;
+      font-size: 0.86rem;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, var(--shadow-sm);
+      transition: transform 0.18s ease, color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .profile-filter:hover,
+    .profile-filter.active {
+      color: var(--blue);
+      border-color: rgba(37, 99, 235, 0.24);
+      background: rgba(219, 234, 254, 0.72);
+      transform: translateY(-1px);
+    }
+
+    .showcase-count {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
     .showcase-shell {
       position: relative;
     }
 
-    .showcase-shell::before,
-    .showcase-shell::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 42px;
-      width: 68px;
-      z-index: 2;
-      pointer-events: none;
+    .slide-stage {
+      --slide-width: min(76vw, 920px);
+      position: relative;
     }
 
-    .showcase-shell::before {
-      left: 0;
-      background: linear-gradient(90deg, rgba(248, 250, 252, 0.98), rgba(248, 250, 252, 0));
-    }
-
-    .showcase-shell::after {
-      right: 0;
-      background: linear-gradient(270deg, rgba(248, 250, 252, 0.98), rgba(248, 250, 252, 0));
-    }
-
-    .profile-carousel {
+    .slide-carousel {
       display: flex;
-      gap: 22px;
+      gap: 18px;
       overflow-x: auto;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
-      scroll-padding-inline: 18px;
-      padding: 8px 18px 22px;
-      margin: 0 -18px;
+      scroll-padding-inline: max(14px, calc((100% - var(--slide-width)) / 2));
+      padding: 4px max(14px, calc((100% - var(--slide-width)) / 2)) 16px;
       scrollbar-width: none;
     }
 
-    .profile-carousel::-webkit-scrollbar {
+    .slide-carousel::-webkit-scrollbar {
       display: none;
     }
 
-    .profile-card {
+    .slide-card {
       position: relative;
-      flex: 0 0 min(86vw, 980px);
+      flex: 0 0 var(--slide-width);
       scroll-snap-align: center;
       display: grid;
-      grid-template-columns: minmax(230px, 0.36fr) minmax(0, 0.64fr);
-      gap: 22px;
-      min-height: 520px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 22px;
-      overflow: hidden;
-      background:
-        linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-        rgba(255, 255, 255, 0.86);
-      background-size: 42px 42px, 42px 42px, auto;
-      box-shadow: 0 20px 56px rgba(15, 23, 42, 0.11);
-      backdrop-filter: blur(18px);
-      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
-      animation: profile-card-reveal 0.7s ease both;
-    }
-
-    .profile-card:nth-child(2) {
-      animation-delay: 0.08s;
-    }
-
-    .profile-card:nth-child(3) {
-      animation-delay: 0.16s;
-    }
-
-    .profile-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at 82% 10%, rgba(37, 99, 235, 0.12), transparent 22rem);
-    }
-
-    .profile-card:hover,
-    .profile-card:focus-within {
-      transform: translateY(-4px);
-      border-color: rgba(37, 99, 235, 0.28);
-      box-shadow: 0 28px 74px rgba(15, 23, 42, 0.16);
-    }
-
-    .profile-copy,
-    .deck-visual {
-      position: relative;
-      z-index: 1;
-    }
-
-    .profile-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 22px;
-      min-width: 0;
-    }
-
-    .profile-index {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      min-height: 30px;
-      padding: 0 10px;
-      border: 1px solid rgba(37, 99, 235, 0.18);
-      border-radius: 999px;
-      background: rgba(219, 234, 254, 0.72);
-      color: var(--blue);
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .profile-copy h3 {
-      margin: 14px 0 10px;
-      font-size: clamp(1.55rem, 2.4vw, 2.25rem);
-      color: var(--ink);
-    }
-
-    .profile-copy p {
-      margin: 0;
-      color: #475569;
-      font-size: 1rem;
-      line-height: 1.62;
-    }
-
-    .prompt-note {
-      border: 1px dashed rgba(148, 163, 184, 0.78);
-      border-radius: var(--radius-sm);
-      padding: 13px 14px;
-      background: rgba(248, 250, 252, 0.74);
-      color: #334155;
-      font-size: 0.9rem;
-      line-height: 1.48;
-    }
-
-    .prompt-note strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--ink);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .profile-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .profile-tags span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 0 10px;
-      border: 1px solid rgba(20, 184, 166, 0.24);
-      border-radius: 999px;
-      background: rgba(204, 251, 241, 0.56);
-      color: #0f766e;
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-
-    .deck-visual {
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
       gap: 12px;
-      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+      opacity: 0.55;
+      transform: scale(0.92);
+      transition: opacity 0.32s ease, transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
     }
 
-    .deck-main {
-      display: grid;
-      place-items: center;
-      min-height: 0;
-      border: 1px solid var(--line);
-      border-radius: 20px;
+    .slide-card.active {
+      opacity: 1;
+      transform: scale(1);
+      border-color: rgba(37, 99, 235, 0.22);
+      box-shadow: 0 28px 72px rgba(30, 58, 138, 0.16);
+    }
+
+    .slide-card[data-profile="product"] {
+      --profile-color: #2563eb;
+      --profile-bg: rgba(219, 234, 254, 0.78);
+    }
+
+    .slide-card[data-profile="research"] {
+      --profile-color: #0f766e;
+      --profile-bg: rgba(204, 251, 241, 0.78);
+    }
+
+    .slide-card[data-profile="visual"] {
+      --profile-color: #0891b2;
+      --profile-bg: rgba(207, 250, 254, 0.82);
+    }
+
+    .slide-image {
       overflow: hidden;
       background: #ffffff;
-      box-shadow: 0 18px 42px rgba(30, 58, 138, 0.13);
     }
 
-    .deck-main img {
+    .slide-image img {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: contain;
       background: #ffffff;
-      transition: transform 0.34s ease;
+      display: block;
     }
 
-    .profile-card:hover .deck-main img {
-      transform: scale(1.018);
+    .slide-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 13px 16px 14px;
+      border-top: 1px solid var(--line);
+      background: rgba(248, 250, 252, 0.86);
+      transform: translateY(4px);
+      transition: transform 0.28s ease;
     }
 
-    .slide-strip {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 9px;
+    .slide-card.active .slide-caption {
+      transform: translateY(0);
     }
 
-    .slide-strip img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: contain;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #ffffff;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.24s ease, box-shadow 0.24s ease;
+    .slide-caption strong {
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.2;
     }
 
-    .profile-card:hover .slide-strip img:nth-child(1) {
-      transform: translateY(-3px);
+    .slide-caption span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 750;
+      white-space: nowrap;
     }
 
-    .profile-card:hover .slide-strip img:nth-child(2) {
-      transform: translateY(-7px);
+    .slide-profile {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 9px;
+      border-radius: 999px;
+      color: var(--profile-color, var(--blue));
+      background: var(--profile-bg, rgba(219, 234, 254, 0.7));
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
-    .profile-card:hover .slide-strip img:nth-child(3) {
-      transform: translateY(-4px);
+    .slide-meta-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
     }
 
-    .profile-card:hover .slide-strip img:nth-child(4) {
-      transform: translateY(-9px);
+    .slide-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .showcase-arrow {
       position: absolute;
-      top: 50%;
+      top: calc(50% - 18px);
       z-index: 3;
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       display: grid;
       place-items: center;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(148, 163, 184, 0.52);
       border-radius: 999px;
       color: var(--ink);
-      background: rgba(255, 255, 255, 0.88);
-      box-shadow: var(--shadow);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.13);
       transform: translateY(-50%);
-      transition: transform 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+      transition: transform 0.16s ease, color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
     }
 
     .showcase-arrow:hover {
       color: var(--blue);
       border-color: rgba(37, 99, 235, 0.28);
       transform: translateY(-50%) scale(1.04);
+      box-shadow: 0 20px 46px rgba(37, 99, 235, 0.18);
     }
 
     .showcase-arrow:disabled {
@@ -684,42 +635,44 @@
     }
 
     .showcase-arrow.prev {
-      left: -12px;
+      left: 4px;
     }
 
     .showcase-arrow.next {
-      right: -12px;
+      right: 4px;
     }
 
-    .showcase-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 8px;
+    .showcase-progress {
+      display: grid;
+      grid-template-columns: repeat(24, minmax(8px, 1fr));
+      gap: 4px;
+      width: min(620px, 100%);
+      margin: 10px auto 0;
     }
 
-    .showcase-dot {
-      width: 34px;
-      height: 8px;
+    .progress-segment {
+      height: 6px;
       border: 0;
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.42);
-      transition: width 0.18s ease, background 0.18s ease;
+      background: rgba(148, 163, 184, 0.32);
+      transition: transform 0.18s ease, background 0.18s ease;
     }
 
-    .showcase-dot.active {
-      width: 48px;
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
+    .progress-segment.product {
+      --progress-color: #2563eb;
     }
 
-    @keyframes profile-card-reveal {
-      from {
-        transform: translateY(18px);
-      }
+    .progress-segment.research {
+      --progress-color: #0f766e;
+    }
 
-      to {
-        transform: translateY(0);
-      }
+    .progress-segment.visual {
+      --progress-color: #06b6d4;
+    }
+
+    .progress-segment.active {
+      background: var(--progress-color);
+      transform: scaleY(1.45);
     }
 
     .system-map {
@@ -1009,11 +962,11 @@
 
     .case-groups {
       display: grid;
-      gap: 24px;
+      gap: 18px;
     }
 
     .case-group-head {
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .case-group-head h3 {
@@ -1029,7 +982,7 @@
     .gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+      gap: 14px;
     }
 
     .gallery-item {
@@ -1043,14 +996,14 @@
 
     .gallery-item img {
       width: 100%;
-      aspect-ratio: 16 / 8.8;
+      height: auto;
       object-fit: contain;
       background: #ffffff;
       border-bottom: 1px solid var(--line);
     }
 
     .gallery-item div {
-      padding: 16px;
+      padding: 12px 14px 14px;
     }
 
     .gallery-item p {
@@ -1068,8 +1021,8 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--paper);
-      padding: 18px;
-      min-height: 180px;
+      padding: 16px;
+      min-height: 164px;
       box-shadow: var(--shadow-sm);
       backdrop-filter: blur(14px);
     }
@@ -1191,18 +1144,16 @@
         height: auto;
       }
 
-      .profile-card {
-        grid-template-columns: 1fr;
-        min-height: auto;
+      .slide-stage {
+        --slide-width: min(84vw, 820px);
       }
 
-      .showcase-shell::before,
-      .showcase-shell::after {
-        width: 38px;
+      .showcase-arrow.prev {
+        left: -6px;
       }
 
-      .showcase-arrow {
-        display: none;
+      .showcase-arrow.next {
+        right: -6px;
       }
     }
 
@@ -1237,7 +1188,7 @@
       }
 
       section {
-        padding: 56px 0;
+        padding: 40px 0;
       }
 
       h2 {
@@ -1271,23 +1222,49 @@
         aspect-ratio: 16 / 9;
       }
 
-      .profile-carousel {
-        gap: 14px;
-        padding-inline: 14px;
-        margin-inline: -14px;
+      .showcase-controls {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
       }
 
-      .profile-card {
-        flex-basis: 90vw;
-        padding: 16px;
+      .slide-stage {
+        --slide-width: 88vw;
       }
 
-      .profile-copy h3 {
-        font-size: 1.45rem;
+      .slide-carousel {
+        gap: 12px;
+        padding-top: 2px;
+        padding-bottom: 12px;
       }
 
-      .slide-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .slide-card {
+        border-radius: 16px;
+        gap: 0;
+      }
+
+      .slide-caption {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding: 11px 12px 12px;
+      }
+
+      .slide-caption span {
+        white-space: normal;
+      }
+
+      .slide-title {
+        white-space: normal;
+      }
+
+      .showcase-arrow {
+        display: none;
+      }
+
+      .showcase-progress {
+        gap: 3px;
+        margin-top: 6px;
       }
     }
 
@@ -1311,12 +1288,9 @@
         padding: 13px 14px 15px;
       }
 
-      .profile-tags span {
-        font-size: 0.76rem;
-      }
-
-      .profile-card {
-        flex-basis: 94vw;
+      .profile-filter {
+        min-height: 36px;
+        padding: 0 12px;
       }
     }
   </style>
@@ -1372,114 +1346,220 @@
         <div class="section-head showcase-head">
           <div>
             <div class="section-kicker">Profile-Aware Generation</div>
-            <h2>Same prompt. Same paper. Three very different slide decks.</h2>
+            <h2>Same prompt. Same paper. Twenty-four profile-shaped slides.</h2>
           </div>
           <p>
             MemSlides uses the same Attention Is All You Need source and the same generation request, then lets each user profile reshape the narrative, emphasis, and visual language.
           </p>
         </div>
-        <div class="showcase-shell">
-          <button class="showcase-arrow prev" type="button" aria-label="Previous deck profile" data-showcase-prev>&larr;</button>
-          <div class="profile-carousel" data-showcase-carousel tabindex="0" aria-label="Profile-specific slide deck examples">
-            <article class="profile-card">
-              <div class="profile-copy">
-                <div>
-                  <span class="profile-index">Profile 01</span>
-                  <h3>Product Decision Frame</h3>
-                  <p>
-                    A product-oriented profile turns the paper into a concise decision deck: executive framing, crisp claims, business-readable evidence, and takeaway-first organization.
-                  </p>
-                  <div class="profile-tags" aria-label="Product profile signals">
-                    <span>Decision framing</span>
-                    <span>Outcome first</span>
-                    <span>Metric language</span>
-                  </div>
-                </div>
-                <div class="prompt-note">
-                  <strong>Shared input</strong>
-                  One prompt and one Transformer paper, interpreted through a product strategy memory profile.
-                </div>
-              </div>
-              <div class="deck-visual">
-                <div class="deck-main">
-                  <img src="figures/Product/首页.png" alt="Product profile title slide generated by MemSlides" loading="lazy">
-                </div>
-                <div class="slide-strip" aria-label="Product profile slide thumbnails">
-                  <img src="figures/Product/Product_01.png" alt="Product profile slide 1" loading="lazy">
-                  <img src="figures/Product/Product_02.png" alt="Product profile slide 2" loading="lazy">
-                  <img src="figures/Product/Product_03.png" alt="Product profile slide 3" loading="lazy">
-                  <img src="figures/Product/Product_04.png" alt="Product profile slide 4" loading="lazy">
-                </div>
-              </div>
-            </article>
-            <article class="profile-card">
-              <div class="profile-copy">
-                <div>
-                  <span class="profile-index">Profile 02</span>
-                  <h3>Research Seminar</h3>
-                  <p>
-                    A lab-seminar profile reorganizes the same material into mechanism, evidence, boundary conditions, and discussion flow for a research audience.
-                  </p>
-                  <div class="profile-tags" aria-label="Research profile signals">
-                    <span>Mechanism first</span>
-                    <span>Evidence chain</span>
-                    <span>Academic tone</span>
-                  </div>
-                </div>
-                <div class="prompt-note">
-                  <strong>Shared input</strong>
-                  The same request becomes a seminar deck because the memory profile changes the target audience and content density.
-                </div>
-              </div>
-              <div class="deck-visual">
-                <div class="deck-main">
-                  <img src="figures/research/首页.png" alt="Research seminar profile title slide generated by MemSlides" loading="lazy">
-                </div>
-                <div class="slide-strip" aria-label="Research profile slide thumbnails">
-                  <img src="figures/research/research_01.png" alt="Research profile slide 1" loading="lazy">
-                  <img src="figures/research/research_02.png" alt="Research profile slide 2" loading="lazy">
-                  <img src="figures/research/research_03.png" alt="Research profile slide 3" loading="lazy">
-                  <img src="figures/research/research_04.png" alt="Research profile slide 4" loading="lazy">
-                </div>
-              </div>
-            </article>
-            <article class="profile-card">
-              <div class="profile-copy">
-                <div>
-                  <span class="profile-index">Profile 03</span>
-                  <h3>Visual Teaching Deck</h3>
-                  <p>
-                    A teaching-oriented profile makes the deck more visual and instructional, with learning targets, diagrams, checks, and classroom pacing.
-                  </p>
-                  <div class="profile-tags" aria-label="Visual teaching profile signals">
-                    <span>Diagram led</span>
-                    <span>Learning target</span>
-                    <span>Classroom rhythm</span>
-                  </div>
-                </div>
-                <div class="prompt-note">
-                  <strong>Shared input</strong>
-                  The same paper becomes a lesson because the profile prioritizes comprehension, visual anchors, and check questions.
-                </div>
-              </div>
-              <div class="deck-visual">
-                <div class="deck-main">
-                  <img src="figures/visual/首页.png" alt="Visual teaching profile title slide generated by MemSlides" loading="lazy">
-                </div>
-                <div class="slide-strip" aria-label="Visual teaching profile slide thumbnails">
-                  <img src="figures/visual/teacher_01.png" alt="Visual teaching profile slide 1" loading="lazy">
-                  <img src="figures/visual/teacher_02.png" alt="Visual teaching profile slide 2" loading="lazy">
-                  <img src="figures/visual/teacher_03.png" alt="Visual teaching profile slide 3" loading="lazy">
-                  <img src="figures/visual/teacher_04.png" alt="Visual teaching profile slide 4" loading="lazy">
-                </div>
-              </div>
-            </article>
+        <div class="showcase-controls" aria-label="Profile showcase controls">
+          <div class="profile-filters" aria-label="Jump to a profile deck">
+            <button class="profile-filter active" type="button" data-profile-start="0" aria-pressed="true">Product</button>
+            <button class="profile-filter" type="button" data-profile-start="8" aria-pressed="false">Research</button>
+            <button class="profile-filter" type="button" data-profile-start="16" aria-pressed="false">Visual</button>
           </div>
-          <button class="showcase-arrow next" type="button" aria-label="Next deck profile" data-showcase-next>&rarr;</button>
-          <div class="showcase-dots" aria-label="Showcase slide navigation">
-            <button class="showcase-dot active" type="button" aria-label="Show product profile deck" data-showcase-dot="0"></button>
-            <button class="showcase-dot" type="button" aria-label="Show research profile deck" data-showcase-dot="1"></button>
-            <button class="showcase-dot" type="button" aria-label="Show visual teaching profile deck" data-showcase-dot="2"></button>
+          <div class="showcase-count">24 generated slides</div>
+        </div>
+        <div class="showcase-shell">
+          <button class="showcase-arrow prev" type="button" aria-label="Previous slide" data-showcase-prev>&larr;</button>
+          <div class="slide-stage">
+            <div class="slide-carousel" data-showcase-carousel tabindex="0" aria-label="Profile-specific slide examples">
+              <article class="slide-card active" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_01.png" alt="Product profile slide 1 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">01 / Decision frame</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_02.png" alt="Product profile slide 2 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">02 / Parallelization claim</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_03.png" alt="Product profile slide 3 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">03 / Training cost</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_04.png" alt="Product profile slide 4 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">04 / Quality evidence</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_05.png" alt="Product profile slide 5 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">05 / Adoption tradeoff</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_06.png" alt="Product profile slide 6 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">06 / Risk boundary</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_07.png" alt="Product profile slide 7 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">07 / Recommendation</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="product">
+                <div class="slide-image"><img src="figures/Product/Product_08.png" alt="Product profile slide 8 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Product</span><strong class="slide-title">08 / Executive summary</strong></div>
+                  <span>Same prompt, product strategy profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_01.png" alt="Research profile slide 1 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">01 / Learning target</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_02.png" alt="Research profile slide 2 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">02 / Architecture map</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_03.png" alt="Research profile slide 3 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">03 / Attention mechanism</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_04.png" alt="Research profile slide 4 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">04 / Training setup</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_05.png" alt="Research profile slide 5 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">05 / Evidence table</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_06.png" alt="Research profile slide 6 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">06 / Representation view</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_07.png" alt="Research profile slide 7 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">07 / Boundary and cost</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="research">
+                <div class="slide-image"><img src="figures/research/research_08.png" alt="Research profile slide 8 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Research</span><strong class="slide-title">08 / Research takeaway</strong></div>
+                  <span>Same prompt, research seminar profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_01.png" alt="Visual teaching profile slide 1 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">01 / Core idea</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_02.png" alt="Visual teaching profile slide 2 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">02 / Token interaction</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_03.png" alt="Visual teaching profile slide 3 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">03 / Multi-head attention</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_04.png" alt="Visual teaching profile slide 4 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">04 / Encoder decoder</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_05.png" alt="Visual teaching profile slide 5 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">05 / Positional encoding</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_06.png" alt="Visual teaching profile slide 6 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">06 / Training signal</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_07.png" alt="Visual teaching profile slide 7 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">07 / Check question</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+              <article class="slide-card" data-profile="visual">
+                <div class="slide-image"><img src="figures/visual/teacher_08.png" alt="Visual teaching profile slide 8 generated by MemSlides" loading="lazy"></div>
+                <div class="slide-caption">
+                  <div class="slide-meta-line"><span class="slide-profile">Visual</span><strong class="slide-title">08 / Lesson recap</strong></div>
+                  <span>Same prompt, visual teaching profile</span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <button class="showcase-arrow next" type="button" aria-label="Next slide" data-showcase-next>&rarr;</button>
+          <div class="showcase-progress" aria-label="Showcase slide navigation">
+            <button class="progress-segment product active" type="button" aria-label="Show Product slide 1" data-showcase-index="0" aria-pressed="true"></button>
+            <button class="progress-segment product" type="button" aria-label="Show Product slide 2" data-showcase-index="1" aria-pressed="false"></button>
+            <button class="progress-segment product" type="button" aria-label="Show Product slide 3" data-showcase-index="2" aria-pressed="false"></button>
+            <button class="progress-segment product" type="button" aria-label="Show Product slide 4" data-showcase-index="3" aria-pressed="false"></button>
+            <button class="progress-segment product" type="button" aria-label="Show Product slide 5" data-showcase-index="4" aria-pressed="false"></button>
+            <button class="progress-segment product" type="button" aria-label="Show Product slide 6" data-showcase-index="5" aria-pressed="false"></button>
+            <button class="progress-segment product" type="button" aria-label="Show Product slide 7" data-showcase-index="6" aria-pressed="false"></button>
+            <button class="progress-segment product" type="button" aria-label="Show Product slide 8" data-showcase-index="7" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 1" data-showcase-index="8" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 2" data-showcase-index="9" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 3" data-showcase-index="10" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 4" data-showcase-index="11" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 5" data-showcase-index="12" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 6" data-showcase-index="13" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 7" data-showcase-index="14" aria-pressed="false"></button>
+            <button class="progress-segment research" type="button" aria-label="Show Research slide 8" data-showcase-index="15" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 1" data-showcase-index="16" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 2" data-showcase-index="17" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 3" data-showcase-index="18" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 4" data-showcase-index="19" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 5" data-showcase-index="20" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 6" data-showcase-index="21" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 7" data-showcase-index="22" aria-pressed="false"></button>
+            <button class="progress-segment visual" type="button" aria-label="Show Visual slide 8" data-showcase-index="23" aria-pressed="false"></button>
           </div>
         </div>
       </div>
@@ -1809,9 +1889,10 @@
     </div>
   </footer>
   <script>
-    const carousel = document.querySelector("[data-showcase-carousel]");
-    const cards = carousel ? Array.from(carousel.querySelectorAll(".profile-card")) : [];
-    const dots = Array.from(document.querySelectorAll("[data-showcase-dot]"));
+    const carousel = document.querySelector("#profile-showcase [data-showcase-carousel]");
+    const cards = carousel ? Array.from(carousel.querySelectorAll(".slide-card")) : [];
+    const progressSegments = Array.from(document.querySelectorAll("[data-showcase-index]"));
+    const profileFilters = Array.from(document.querySelectorAll("[data-profile-start]"));
     const prev = document.querySelector("[data-showcase-prev]");
     const next = document.querySelector("[data-showcase-next]");
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1834,11 +1915,32 @@
       return closest;
     }
 
+    function activeProfileFromIndex(index) {
+      if (index >= 16) {
+        return "visual";
+      }
+      if (index >= 8) {
+        return "research";
+      }
+      return "product";
+    }
+
     function updateShowcaseState() {
       const index = activeShowcaseIndex();
-      dots.forEach((dot, dotIndex) => {
-        dot.classList.toggle("active", dotIndex === index);
-        dot.setAttribute("aria-pressed", dotIndex === index ? "true" : "false");
+      const profile = activeProfileFromIndex(index);
+      cards.forEach((card, cardIndex) => {
+        card.classList.toggle("active", cardIndex === index);
+      });
+      progressSegments.forEach((segment, segmentIndex) => {
+        segment.classList.toggle("active", segmentIndex === index);
+        segment.setAttribute("aria-pressed", segmentIndex === index ? "true" : "false");
+      });
+      profileFilters.forEach((filter) => {
+        const start = Number(filter.dataset.profileStart);
+        const filterProfile = activeProfileFromIndex(start);
+        const isActive = filterProfile === profile;
+        filter.classList.toggle("active", isActive);
+        filter.setAttribute("aria-pressed", isActive ? "true" : "false");
       });
       if (prev) {
         prev.disabled = index === 0;
@@ -1872,8 +1974,11 @@
           scrollToShowcaseCard(Math.min(cards.length - 1, activeShowcaseIndex() + 1));
         }
       });
-      dots.forEach((dot) => {
-        dot.addEventListener("click", () => scrollToShowcaseCard(Number(dot.dataset.showcaseDot)));
+      progressSegments.forEach((segment) => {
+        segment.addEventListener("click", () => scrollToShowcaseCard(Number(segment.dataset.showcaseIndex)));
+      });
+      profileFilters.forEach((filter) => {
+        filter.addEventListener("click", () => scrollToShowcaseCard(Number(filter.dataset.profileStart)));
       });
       window.addEventListener("resize", updateShowcaseState);
       updateShowcaseState();
